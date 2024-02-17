@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "984473018825",
+    "project_id": "resume-screening-bc212",
+    "storage_bucket": "resume-screening-bc212.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984473018825:android:99b836023808d5a15b0818",
+        "android_client_info": {
+          "package_name": "com.example.resumescreening"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3AqEf3p-8Dn_Pk8fgxAxc0RN82gFMfb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
