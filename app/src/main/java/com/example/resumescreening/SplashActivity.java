@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try {
                     // Thread will sleep for 5 seconds
-                    sleep(10*1000);
+                    sleep(5*1000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
