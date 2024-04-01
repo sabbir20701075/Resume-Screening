@@ -1,39 +1,57 @@
 package com.example.resumescreening;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
-
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Rating extends AppCompatActivity {
-    RatingBar rt;
+    RatingBar ratingBar;
+    DatabaseReference feedbackRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating_bar);
 
-        //binding MainActivity.java with activity_main.xml file
-        rt =  findViewById(R.id.ratingBar);
+        // Binding Rating activity with activity_rating_bar.xml layout
+        ratingBar = findViewById(R.id.ratingBar);
 
-        //finding the specific RatingBar with its unique ID
-        LayerDrawable stars=(LayerDrawable)rt.getProgressDrawable();
-
-        //Use for changing the color of RatingBar
+        // Finding the specific RatingBar with its unique ID and changing its color
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+
+        // Initialize Firebase database reference
+        feedbackRef = FirebaseDatabase.getInstance().getReference().child("feedback");
     }
 
-    public void Call(View v)
-    {
-        // This function is called when button is clicked.
-        // Display ratings, which is required to be converted into string first.
-        TextView t = (TextView)findViewById(R.id.textView2);
-        t.setText("You Rated :"+String.valueOf(rt.getRating()));
+    // Function to be called when the submit button is clicked
+    public void Call(View v) {
+        TextView textView = findViewById(R.id.textView2);
+        textView.setText("You Rated: " + ratingBar.getRating());
+
+        // Extract feedback text from EditText
+        TextView feedbackTextView = findViewById(R.id.feedbackEditText);
+        String feedback = feedbackTextView.getText().toString();
+
+        // Save the rating and feedback to Firebase
+        if (!feedback.isEmpty()) {
+            feedbackRef.push().setValue(feedback);
+            // Provide feedback to the user
+            // Show a toast message confirming the feedback submission
+            Toast.makeText(this, "Feedback sent successfully", Toast.LENGTH_SHORT).show();
+            // Clear the feedback EditText
+            feedbackTextView.setText("");
+        } else {
+            // If feedback is empty, notify the user
+            Toast.makeText(this, "Please provide feedback", Toast.LENGTH_SHORT).show();
+        }
     }
 }

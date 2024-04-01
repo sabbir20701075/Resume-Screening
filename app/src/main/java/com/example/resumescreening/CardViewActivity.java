@@ -8,7 +8,7 @@ import android.view.View;
 
 public class CardViewActivity extends AppCompatActivity {
 
-    CardView calenderCard,reactionCard,settingCard,locationCard;
+    CardView calenderCard,reactionCard,videoCard,locationCard,logoutCard,uploadCard;
 
 
     @Override
@@ -17,8 +17,20 @@ public class CardViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card_view);
         calenderCard = findViewById(R.id.calenderCard);
         reactionCard = findViewById(R.id.reactionCard);
-        settingCard = findViewById(R.id.settingCard);
+        videoCard = findViewById(R.id.videoCard);
         locationCard = findViewById(R.id.locationCard);
+        uploadCard = findViewById(R.id.uploadCard);
+        logoutCard = findViewById(R.id.logoutCard);
+
+
+        uploadCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CardViewActivity.this, UploadImage.class);
+                startActivity(intent);
+            }
+        });
+
         calenderCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -33,7 +45,7 @@ public class CardViewActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        settingCard.setOnClickListener(new View.OnClickListener() {
+        videoCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CardViewActivity.this, EmbeddedVideo.class);
@@ -48,6 +60,16 @@ public class CardViewActivity extends AppCompatActivity {
                 startActivity(mapIntent);
             }
         });
+        logoutCard.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent logoutIntent = new Intent(CardViewActivity.this, LogInActivity.class);
+                startActivity(logoutIntent);
+                finish();
+            }
+        });
+
+
 
     }
 }

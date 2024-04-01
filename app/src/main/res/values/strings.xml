@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Resume Screening</string>
+
+        <string-array name="country_array">
+            <item>USA</item>
+            <item>UK</item>
+            <item>Bangladesh</item>
+            <item>India</item>
+            <item>Italy</item>
+        </string-array>
 </resources>
