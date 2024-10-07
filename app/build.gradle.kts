@@ -89,6 +89,7 @@ dependencies {
 // TensorFlow Lite Metadata Library
    implementation("org.tensorflow:tensorflow-lite-metadata:0.3.1")
 
+    implementation("com.github.PhilJay:MPAndroidChart:v3.0.3")
 
 
 

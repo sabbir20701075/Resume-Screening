@@ -4,7 +4,7 @@ pluginManagement {
         google() // For Android and Google libraries
         mavenCentral() // Primary repository for most libraries
         gradlePluginPortal() // For Gradle plugins
-        //maven("https://jitpack.io")
+        maven("https://jitpack.io")
         //jcenter()
         //maven { url=uri ("https://jcenter.bintray.com") }
 
@@ -17,7 +17,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-       // maven("https://jitpack.io")
+       maven("https://jitpack.io")
         //jcenter()
         //maven { url=uri ("https://jcenter.bintray.com") }
         
