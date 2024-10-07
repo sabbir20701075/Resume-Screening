@@ -28,7 +28,6 @@ public class DatePicker extends AppCompatActivity {
         pickDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // on below line we are getting
                 // the instance of our calendar.
                 final Calendar c = Calendar.getInstance();
 

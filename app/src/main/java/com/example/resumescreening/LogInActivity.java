@@ -3,7 +3,9 @@ package com.example.resumescreening;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +19,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-
 public class LogInActivity extends AppCompatActivity {
 
     EditText loginUsername, loginPassword;
     Button loginButton;
     TextView signupRedirectText;
+
+    // SharedPreferences object to handle session
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "user_session";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_PASSWORD = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +41,24 @@ public class LogInActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         signupRedirectText = findViewById(R.id.signupRedirectText);
 
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        // Check if the user is already logged in
+        String savedUsername = sharedPreferences.getString(KEY_USERNAME, null);
+        if (savedUsername != null) {
+            // If user session exists, navigate to another activity (e.g., CardViewActivity)
+            Intent intent = new Intent(LogInActivity.this, CardViewActivity.class);
+            intent.putExtra("username", savedUsername);
+            startActivity(intent);
+            finish(); // Close the login activity
+        }
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!validateUsername() | !validatePassword()) {
-
+                    // Do nothing if validation fails
                 } else {
                     checkUser();
                 }
@@ -52,7 +72,6 @@ public class LogInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     public Boolean validateUsername() {
@@ -77,8 +96,7 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
-
-    public void checkUser(){
+    public void checkUser() {
         String userUsername = loginUsername.getText().toString().trim();
         String userPassword = loginPassword.getText().toString().trim();
 
@@ -88,9 +106,7 @@ public class LogInActivity extends AppCompatActivity {
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot.exists()){
-
+                if (snapshot.exists()) {
                     loginUsername.setError(null);
                     String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
 
@@ -101,14 +117,20 @@ public class LogInActivity extends AppCompatActivity {
                         String emailFromDB = snapshot.child(userUsername).child("email").getValue(String.class);
                         String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
 
-                        Intent intent = new Intent(LogInActivity.this, CardViewActivity.class);
+                        // Save session using SharedPreferences
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(KEY_USERNAME, usernameFromDB);
+                        editor.putString(KEY_PASSWORD, passwordFromDB);
+                        editor.apply();  // Save the data
 
+                        // Redirect to CardViewActivity
+                        Intent intent = new Intent(LogInActivity.this, CardViewActivity.class);
                         intent.putExtra("name", nameFromDB);
                         intent.putExtra("email", emailFromDB);
                         intent.putExtra("username", usernameFromDB);
                         intent.putExtra("password", passwordFromDB);
-
                         startActivity(intent);
+                        finish(); // Close login activity after successful login
                     } else {
                         loginPassword.setError("Invalid Credentials");
                         loginPassword.requestFocus();
@@ -121,7 +143,6 @@ public class LogInActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

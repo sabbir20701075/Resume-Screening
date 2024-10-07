@@ -37,7 +37,82 @@ import com.google.android.gms.maps.SupportMapFragment;
 import androidx.fragment.app.Fragment;
 import com.google.android.gms.maps.SupportMapFragment;
 
-public class Map extends AppCompatActivity implements OnMapReadyCallback {
+public
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Map extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;

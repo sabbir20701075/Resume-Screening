@@ -1,11 +1,36 @@
 <resources>
     <string name="app_name">Resume Screening</string>
+    <string name="page_number">Page %1$d of %2$d</string>
 
-        <string-array name="country_array">
-            <item>USA</item>
-            <item>UK</item>
-            <item>Bangladesh</item>
-            <item>India</item>
-            <item>Italy</item>
-        </string-array>
+
+    <string-array name="religions_array">
+        <item>Muslim</item>
+        <item>Hindu</item>
+        <item>Christian</item>
+        <!-- Add other religions here -->
+    </string-array>
+
+    <string-array name="muslim_classifications">
+        <item>Sunni</item>
+        <item>Shia</item>
+        <!-- Add other classifications for Muslim -->
+    </string-array>
+
+    <string-array name="hindu_classifications">
+        <item>Brahmins</item>
+        <item>Kshatriyas</item>
+        <item>Vaishyas</item>
+        <item>Shudras</item>
+    </string-array>
+
+    <string-array name="christian_classifications">
+        <item>Catholic</item>
+        <item>Protestant</item>
+        <!-- Add other classifications for Christian -->
+    </string-array>
 </resources>
+
+
+
+
+

@@ -26,13 +26,12 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 finally{
                     // After 5 seconds redirect to another intent
-                    Intent intent=new Intent(SplashActivity.this,SignUpActivity.class);
+                    Intent intent=new Intent(SplashActivity.this,LogInActivity.class);
                     startActivity(intent);
                     finish();
                 }
             }
         };
-        // start thread
         thread.start();
     }
 }

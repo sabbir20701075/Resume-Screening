@@ -46,7 +46,43 @@
                 android:hint="Name"
                 android:padding="8dp"
                 android:textColor="@color/black" />
-           
+
+            <!-- Religion Spinner -->
+            <LinearLayout
+                android:id="@+id/religion_spinner_layout"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"
+                android:padding="8dp"
+                android:background="@drawable/lavender_border">
+
+                <Spinner
+                    android:id="@+id/signup_religion_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:spinnerMode="dropdown"/>
+
+            </LinearLayout>
+
+            <!-- Classification Spinner -->
+            <LinearLayout
+                android:id="@+id/classification_spinner_layout"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:background="@drawable/lavender_border">
+
+                <Spinner
+                    android:id="@+id/classification_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@null"
+                    android:spinnerMode="dropdown"/>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/signup_email"
