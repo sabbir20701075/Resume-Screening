@@ -27,8 +27,7 @@ public class RateActivity extends AppCompatActivity {
     private Button submitRatingButton;
     private DatabaseReference ratingsRef;
     private FirebaseUser currentUser;
-    private TextView[] ratingCountTextViews = new TextView[5];
-    private TextView likeCountTextView, dislikeCountTextView;
+    private TextView averageRatingTextView, likeCountTextView, dislikeCountTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,23 +36,22 @@ public class RateActivity extends AppCompatActivity {
         ratingsRef = FirebaseDatabase.getInstance().getReference().child("ratings");
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        // Initialize views
         ratingBar = findViewById(R.id.ratingBar);
         reviewEditText = findViewById(R.id.reviewEditText);
         likeButton = findViewById(R.id.likeButton);
         dislikeButton = findViewById(R.id.dislikeButton);
-        ratingCountTextViews[0] = findViewById(R.id.rating1CountTextView);
-        ratingCountTextViews[1] = findViewById(R.id.rating2CountTextView);
-        ratingCountTextViews[2] = findViewById(R.id.rating3CountTextView);
-        ratingCountTextViews[3] = findViewById(R.id.rating4CountTextView);
-        ratingCountTextViews[4] = findViewById(R.id.rating5CountTextView);
+        averageRatingTextView = findViewById(R.id.averageRatingTextView);
         likeCountTextView = findViewById(R.id.likeCountTextView);
         dislikeCountTextView = findViewById(R.id.dislikeCountTextView);
         submitRatingButton = findViewById(R.id.submitRatingButton);
 
         fetchCounts();
+
+        // Submit rating
         submitRatingButton.setOnClickListener(v -> submitRating());
 
-
+        // Like button click
         likeButton.setOnClickListener(v -> {
             ratingsRef.child(currentUser.getUid()).child("like").setValue(true);
             ratingsRef.child(currentUser.getUid()).child("dislike").setValue(false);
@@ -61,12 +59,12 @@ public class RateActivity extends AppCompatActivity {
             fetchCounts();
         });
 
+        // Dislike button click
         dislikeButton.setOnClickListener(v -> {
             ratingsRef.child(currentUser.getUid()).child("like").setValue(false);
             ratingsRef.child(currentUser.getUid()).child("dislike").setValue(true);
             Toast.makeText(RateActivity.this, "Disliked!", Toast.LENGTH_SHORT).show();
             fetchCounts();
-
         });
     }
 
@@ -74,27 +72,33 @@ public class RateActivity extends AppCompatActivity {
         ratingsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int[] ratingCounts = new int[5];
                 int likeCount = 0, dislikeCount = 0;
+                float totalRating = 0;
+                int ratingCount = 0;
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    // Calculate total rating for average rating
                     if (dataSnapshot.child("rating").exists()) {
                         float rating = dataSnapshot.child("rating").getValue(Float.class);
-                        if (rating >= 1 && rating <= 5) {
-                            int index = (int) rating - 1;
-                            ratingCounts[index]++;
-                        }
+                        totalRating += rating;
+                        ratingCount++;
                     }
 
+                    // Count likes and dislikes
                     if (dataSnapshot.child("like").exists() && dataSnapshot.child("like").getValue(Boolean.class))
                         likeCount++;
                     if (dataSnapshot.child("dislike").exists() && dataSnapshot.child("dislike").getValue(Boolean.class))
                         dislikeCount++;
                 }
 
-                for (int i = 0; i < ratingCounts.length; i++) {
-                    ratingCountTextViews[i].setText("Rating " + (i + 1) + ": " + ratingCounts[i] + " person(s)");
+                // Calculate average rating
+                if (ratingCount > 0) {
+                    float averageRating = totalRating / ratingCount;
+                    averageRatingTextView.setText("Average Rating: " + String.format("%.1f", averageRating));
+                } else {
+                    averageRatingTextView.setText("Average Rating: 0.0");
                 }
+
                 likeCountTextView.setText("Likes: " + likeCount);
                 dislikeCountTextView.setText("Dislikes: " + dislikeCount);
             }

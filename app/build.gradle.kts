@@ -91,6 +91,10 @@ dependencies {
 
     implementation("com.github.PhilJay:MPAndroidChart:v3.0.3")
 
+   // implementation("com.apollographql.apollo3:apollo-runtime:3.6.0")
+    implementation ("com.apollographql.apollo:apollo-runtime:2.5.9")
+    implementation ("com.apollographql.apollo:apollo-coroutines-support:2.5.9") // If you plan to use coroutines
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.2")
 
 
 
