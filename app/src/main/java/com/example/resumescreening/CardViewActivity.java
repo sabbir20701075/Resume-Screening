@@ -57,6 +57,13 @@ public class CardViewActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        graphqlCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CardViewActivity.this, Country.class);
+                startActivity(intent);
+            }
+        });
 
         calenderCard.setOnClickListener(new View.OnClickListener() {
             @Override

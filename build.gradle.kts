@@ -6,6 +6,8 @@ buildscript {
     }
     dependencies {
         classpath("com.google.gms:google-services:4.3.15") // Google Services plugin
+        //classpath("com.apollographql.apollo:apollo:apollo-gradle-plugin:2.5.9")
+        classpath("com.apollographql.apollo3:apollo-gradle-plugin:3.7.4")
     }
 }
 
